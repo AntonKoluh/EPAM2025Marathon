@@ -24,9 +24,5 @@ export function checkMaxPrice(
     setErrors((prev) => ({ ...prev, maxPrice: "Max price has to be a number" }));
     return false;
   }
-  if (priceNum === 0) {
-    setErrors((prev) => ({ ...prev, maxPrice: "Max price cannot be 0" }));
-    return false;
-  }
   return true;
 }
