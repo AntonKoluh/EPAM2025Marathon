@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-label="Mirrored Santa hat tilted 20 degrees">
+  <g transform="scale(-1,1) translate(-256,0) rotate(20 128 128)">
+    <!-- Hat body -->
+    <path d="M56 150
+             C70 92, 142 44, 188 64
+             C169 66, 158 84, 151 110
+             C144 136, 176 150, 208 150
+             L56 150 Z"
+          fill="#D91E2E"/>
+    <!-- Subtle shading on hat -->
+    <path d="M72 146
+             C84 96, 145 63, 176 72
+             C160 78, 150 95, 146 113
+             C140 135, 160 146, 184 148
+             L72 146 Z"
+          fill="#000" opacity="0.08"/>
+    <!-- Brim -->
+    <rect x="48" y="150" width="160" height="36" rx="18" fill="#FFFFFF"/>
+    <!-- Brim inner shadow -->
+    <rect x="48" y="150" width="160" height="36" rx="18" fill="#000000" opacity="0.06"/>
+    <!-- Pom-pom -->
+    <circle cx="202" cy="58" r="18" fill="#FFFFFF"/>
+    <!-- Pom-pom soft shadow -->
+    <circle cx="202" cy="58" r="18" fill="#000000" opacity="0.06"/>
+  </g>
+</svg>
