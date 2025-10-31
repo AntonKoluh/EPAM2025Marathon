@@ -17,6 +17,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/join" element={<JoinRoomByCode />} />
         <Route path="/create" element={<CreateRoom />} />
         <Route path="/createuser" element={<MasterCreateUser />} />
+        <Route path="/:id" element={<JoinRoomByCode />} />
         </Route>
       </Routes>
     </BrowserRouter>

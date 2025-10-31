@@ -21,6 +21,7 @@ type incomingProps = {
   setState: React.Dispatch<React.SetStateAction<"user" | "pref" | "finish">>;
   pref: string;
   setPref: React.Dispatch<React.SetStateAction<string>>;
+  submitResult: () => void;
 };
 
 export default function CreatePreferance({
@@ -29,7 +30,8 @@ export default function CreatePreferance({
   wish,
   setWish,
   pref,
-  setPref
+  setPref,
+  submitResult,
 }: incomingProps) {
 
 
@@ -47,6 +49,7 @@ export default function CreatePreferance({
   }
 
   function handleFinish(){
+    submitResult()
     setState("finish")
   }
 
