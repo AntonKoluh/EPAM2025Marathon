@@ -24,7 +24,7 @@ class Room(models.Model):
         Creates a new room
         """
         room_key = generate_uid()
-        date_obj = datetime.strptime(room.get("date"), "%d/%m/%Y").date()
+        date_obj = datetime.strptime(room.get("date"), "%m/%d/%Y").date()
         while cls.objects.filter(room_code = room_key).exists():
             room_key = generate_uid()
         new_room = cls(master=master, exchange_date=date_obj, room_code=room_key, name=room.get("roomName"), msg=room.get("welcomeMsg"), budget=room.get("maxPrice"))
@@ -45,6 +45,7 @@ class Users(models.Model):
     pref = models.CharField(max_length=250, null=True, blank=True)
     links = models.JSONField(default=list, validators=[validate_items], blank=True)
     code = models.CharField(max_length=7)
+    room_code = models.CharField(max_length=7, blank=True)
     active = models.BooleanField(default=True)
 
     @classmethod
@@ -60,10 +61,12 @@ class Users(models.Model):
         while cls.objects.filter(code = generate_user_code).exists():
             generate_user_code = generate_uid()
         
-        new_user = cls(fn=user.get('fn'), ln=user.get('ln'), phone=user.get('phone'), email=user.get('email'), adress=user.get('adress'), pref=pref, links=wish, code=generate_user_code)
-        new_user.save()
+        new_user = cls(fn=user.get('fn'), ln=user.get('ln'), phone=user.get('phone'), email=user.get('email'), adress=user.get('adress'), pref=pref, links=wish, code=generate_user_code, room_code=room_key)
         print(room_key)
         if data.get("room").get('roomName') != '':
             room_key = Room.create_room(data.get("room"), generate_user_code)
+            new_user.room_code = room_key
+
+        new_user.save()
 
         return {"room": room_key, "user": generate_user_code}

@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router";
 import Button from "../components/buttons";
 import Input from "../components/formInput";
 import { useEffect, useState } from "react";
-import christmastree from "../assets/christmastree.svg"
+import christmastree from "../assets/christmastree.svg";
 
 type roomInfoType = {
   date: string;
@@ -21,7 +21,7 @@ export default function JoinRoomByCode() {
     const res = await fetch("http://127.0.0.1:8000/api/v1/room/" + id);
     const result = await res.json();
     setRoomInfo(result);
-    console.log(result)
+    console.log(result);
     setIsLoading(false);
     return result;
   }
@@ -53,7 +53,7 @@ export default function JoinRoomByCode() {
   }
   return (
     <div className="flex flex-col px-12 w-full py-6 mt-14 gap-3 h-full">
-      <div className="flex flex-row justify-center h-fit">
+      <div className="flex flex-row justify-between h-fit">
         <div className="">
           <h1 className="text-3xl font-semibold">
             Welcome to {roomInfo?.name}
@@ -65,31 +65,39 @@ export default function JoinRoomByCode() {
           </p>
           <div className="mt-10 flex flex-row justify-around items-center gap-4">
             <div className="border-zinc-400 rounded-xl border-3 bg-zinc-200 flex flex-col justify-center items-center gap-2 py-4 w-full">
-                <p className="font-bold">Exchange Date</p>
-                <p className="text-gray-700">{roomInfo?.date}</p>
+              <p className="font-bold">Exchange Date</p>
+              <p className="text-gray-700">{roomInfo?.date}</p>
             </div>
             <div className="border-zinc-400 rounded-xl border-3 bg-zinc-200 flex flex-col justify-center items-center gap-2 py-4 w-full">
-                <p className="font-bold">Budget</p>
-            <p className="text-gray-700">{roomInfo?.maxPrice === 0 ? "Unlimited" : roomInfo?.maxPrice}</p>
+              <p className="font-bold">Budget</p>
+              <p className="text-gray-700">
+                {roomInfo?.maxPrice === 0 ? "Unlimited" : roomInfo?.maxPrice}
+              </p>
             </div>
           </div>
         </div>
-        <div className="">
-            <img src={christmastree} alt="christmas tree" className=""/>
+        <div className="flex flex-row justify-end items-center">
+          <img src={christmastree} alt="christmas tree" className="" />
         </div>
       </div>
-      <div className="p-8">
-        <h2 className="font-bold text-2xl">To join the fun, you'll just need to:</h2>
+      <div className="py-8">
+        <h2 className="font-bold text-2xl">
+          To join the fun, you'll just need to:
+        </h2>
         <p className="font-semibold mt-4">- Fill in your details</p>
-        <p className="font-semibold mt-2">- Add your wishlist (or let the magic decide!)</p>
-        <p className="font-semibold mt-4">It only takes a minute -- and the joy will last all season long!</p>
+        <p className="font-semibold mt-2">
+          - Add your wishlist (or let the magic decide!)
+        </p>
+        <p className="font-semibold mt-4">
+          It only takes a minute -- and the joy will last all season long!
+        </p>
       </div>
-                      <Link
-                to={`/createuser?roomId=${id}`}
-                  className="rounded-4xl bg-(--green) h-12 text-xl text-gray-100 hover:bg-(--green)/80 shadow-md/40 hover:shadow-sm cursor-pointer w-full mt-3 flex justify-center items-center"
-                >
-                  Join the room
-                </Link>
+      <Link
+        to={`/createuser?roomId=${id}`}
+        className="rounded-4xl bg-(--green) h-12 text-xl text-gray-100 hover:bg-(--green)/80 shadow-md/40 hover:shadow-sm cursor-pointer w-full mt-3 flex justify-center items-center"
+      >
+        Join the room
+      </Link>
     </div>
   );
 }

@@ -9,4 +9,4 @@ class UsersSerializer(serializers.ModelSerializer):
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
-        fields = '__all__'
+        fields = ['exchange_date' ,'state', 'room_code', 'name', 'msg', 'budget']

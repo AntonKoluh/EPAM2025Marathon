@@ -7,6 +7,8 @@ import Landing from "./pages/landing.tsx";
 import JoinRoomByCode from "./pages/joinroom.tsx";
 import CreateRoom from "./pages/createroom.tsx";
 import MasterCreateUser from "./pages/masterCreateUser.tsx";
+import RoomMain from "./pages/room/roomMain.tsx";
+
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -18,6 +20,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/create" element={<CreateRoom />} />
         <Route path="/createuser" element={<MasterCreateUser />} />
         <Route path="/:id" element={<JoinRoomByCode />} />
+        <Route path="/:room/:user" element={<RoomMain />} />
         </Route>
       </Routes>
     </BrowserRouter>
