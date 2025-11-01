@@ -42,10 +42,11 @@ class Users(models.Model):
     phone = models.IntegerField()
     email = models.CharField(max_length=100, null=True, blank=True)
     adress = models.CharField(max_length=250)
+    admin = models.BooleanField(default=False)
     pref = models.CharField(max_length=250, null=True, blank=True)
     links = models.JSONField(default=list, validators=[validate_items], blank=True)
     code = models.CharField(max_length=7)
-    room_code = models.CharField(max_length=7, blank=True)
+    room_code = models.CharField(max_length=10, blank=True)
     active = models.BooleanField(default=True)
 
     @classmethod
@@ -60,11 +61,12 @@ class Users(models.Model):
         generate_user_code = generate_uid()
         while cls.objects.filter(code = generate_user_code).exists():
             generate_user_code = generate_uid()
-        
-        new_user = cls(fn=user.get('fn'), ln=user.get('ln'), phone=user.get('phone'), email=user.get('email'), adress=user.get('adress'), pref=pref, links=wish, code=generate_user_code, room_code=room_key)
+        phone = "+380" + user.get('phone') if user.get('phone') != "" else ""
+        new_user = cls(fn=user.get('fn'), ln=user.get('ln'), phone=phone, email=user.get('email'), adress=user.get('adress'), pref=pref, links=wish, code=generate_user_code, room_code=room_key)
         print(room_key)
         if data.get("room").get('roomName') != '':
             room_key = Room.create_room(data.get("room"), generate_user_code)
+            new_user.admin = True
             new_user.room_code = room_key
 
         new_user.save()

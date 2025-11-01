@@ -4,7 +4,13 @@ from base.models import Users, Room
 class UsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
+        fields = ['id', 'fn', 'ln', 'email', 'phone', 'admin', 'code', 'links', 'pref', 'adress']
+
+class UsersSerializerAdmin(serializers.ModelSerializer):
+    class Meta:
+        model = Users
         fields = '__all__'
+
 
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:

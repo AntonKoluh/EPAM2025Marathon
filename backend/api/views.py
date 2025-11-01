@@ -25,6 +25,18 @@ def get_room_info(request, room, user):
     if not user_obj:
         return Response({"error": "Room with user not found"})
     room_serializer = RoomSerializer(room_obj)
-    users = Users.object.filter(room_code=room).all()
+    users = Users.objects.filter(room_code=room)
+    if room_obj.master != user:
+        for item in users:
+            if item.code == user or item.code == room_obj.master:
+                pass
+            else:
+                item.email = ""
+                item.phone = 0
+                item.links = [{}]
+                item.pref = ""
+            item.code = "" if item.code != user else item.code
+            
     users_serializer = UsersSerializer(users, many=True)
+    print(users_serializer.data)
     return Response({"room": room_serializer.data, "users":users_serializer.data})

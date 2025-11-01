@@ -179,15 +179,21 @@ export default function CreateUser({
             <p>
               Phone number<span className="text-red-600">*</span>
             </p>
+            <div className="flex flex-row justify-center items-center">
+            <p className={clsx(
+                "rounded-sm p-1 text-black bg-(--gray) border-border border-3 border-r-0 rounded-r-none",
+                errors.phone ? "border-red-700" : "border-border"
+              )}>+380</p>
             <input
               type="number"
               className={clsx(
-                "rounded-sm p-1 text-black bg-(--gray) border-border border-3 w-full max-w-xl",
+                "rounded-sm p-1 text-black bg-(--gray) border-border border-3 w-full max-w-xl border-l-0 rounded-l-none focus:outline-0",
                 errors.phone ? "border-red-700" : "border-border"
               )}
               value={data.phone}
               onChange={(e) => updateForm(e, "phone")}
             />
+            </div>
             {errors.phone ? (
               <span className="text-red-700 text-sm!">{errors.phone}</span>
             ) : null}
