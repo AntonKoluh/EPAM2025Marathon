@@ -39,15 +39,15 @@ export default function RoomMain() {
     return <h1>Loading</h1>;
   }
   return (
-    <div className="flex flex-col jsutify-start items-top w-full p-6">
-      <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full">
+    <div className="flex flex-col jsutify-start items-top w-full p-6 h-fit">
+      <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full h-fit">
         <RoomInfo roomInfo={roomInfo} />
         <PersonalCard roomInfo={roomInfo} user={user} />
       </div>
-      <div className="flex flex-col sm:flex-row justify-start items-top gap-4 w-full mt-4">
+      <div className="flex flex-col sm:flex-row justify-start items-top gap-4 w-full mt-4 h-fit min-h-0 overflow-hidden py-1">
         <UserList roomInfo={roomInfo} user={user} setRoomInfo={setRoomInfo}/>
         <div className="flex flex-col justify-start items-center w-[267px] gap-4">
-        <GameControl />
+        {roomInfo?.users.filter(item => item.code == user)[0].admin ? <GameControl /> : null}
         <WishList roomInfo={roomInfo} user={user}/>
         </div>
       </div>

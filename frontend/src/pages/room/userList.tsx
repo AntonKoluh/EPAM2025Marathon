@@ -40,7 +40,7 @@ export default function UserList({
 
 
   return (
-    <div className="bg-white rounded-xl flex-2 w-full h-fit p-4 shadow-md/40 flex flex-col justify-center items-center">
+    <div className="bg-white rounded-xl flex-2 w-full h-fit p-4 shadow-md/40 flex flex-col justify-center items-center max-h-130">
       <div className="flex flex-row justify-start items-center">
         <div>
           <h1 className="text-2xl font-semibold text-left">Who's Playing?</h1>
@@ -55,7 +55,7 @@ export default function UserList({
         </div>
         <img src={rainder} alt="Raindeers" />
       </div>
-      <div className="flex flex-col justify-start items-left mt-2 w-full gap-2">
+      <div className="flex flex-col justify-start items-left mt-2 h-fit w-full gap-2 px-2 py-2 overflow-y-auto my-scrollbar">
         {roomInfo?.users.map((items) => (
           <UserCard
             key={items.id}

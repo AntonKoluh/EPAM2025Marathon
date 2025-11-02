@@ -46,6 +46,23 @@
     --sidebar-ring: oklch(0.708 0 0);
 }
 
+.my-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.my-scrollbar::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+.my-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--green);
+  border-radius: 8px;
+}
+
+.my-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--green);
+}
+
 @theme inline {
     --radius-sm: calc(var(--radius) - 4px);
     --radius-md: calc(var(--radius) - 2px);

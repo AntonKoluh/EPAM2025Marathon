@@ -22,7 +22,7 @@ export default function WishList({
   const wishType = currentUser?.pref != "" ? "pref" : "wish";
 
   return (
-    <div className="relative bg-white shadow-md/40 rounded-xl flex-1 w-full h-fit flex flex-col justify-start items-center border-border">
+    <div className="relative bg-white shadow-md/40 rounded-xl flex-1 w-full flex flex-col justify-start items-center border-border h-fit max-h-70">
       <div className="w-full bg-(--green) text-gray-100 flex flex-row justify-center items-center gap-4 rounded-t-xl">
         <img src={snowflake} alt="snowflake" />
         <h3 className="text-xl">
@@ -30,18 +30,18 @@ export default function WishList({
         </h3>
         <img src={snowflake} alt="snowflake" />
       </div>
-      <div className="h-fit min-h-10 flex flex-col justify-start items-center w-full my-2">
+      <div className="h-full min-h-10 flex flex-col justify-start items-top w-full my-2">
         {wishType == "pref" ? (
           <div className="line-clamp-6">{currentUser?.pref}</div>
         ) : (
-          <div className="w-full px-2 flex flex-col justify-center items-center gap-2">
+          <div className="w-full px-2 flex flex-col justify-start items-center gap-2 h-full overflow-y-auto my-scrollbar">
             {currentUser?.links.map((wish: wishType) => (
               <WishCard wish={wish} key={wish.id} />
             ))}
           </div>
         )}
       </div>
-      <div className="mt-auto mb-4 w-full text-center px-4">
+      <div className="flex flex-col justify-end items-center mb-4 w-full text-center px-4 h-fit">
         {wishType == "pref" ? (
           <ViewPref budget={roomInfo?.room.budget} pref={currentUser?.pref} />
         ) : (

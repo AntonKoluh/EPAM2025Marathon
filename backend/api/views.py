@@ -40,7 +40,8 @@ def get_room_info(request, room, user):
             item.code = "" if item.code != user else item.code
             
     users_serializer = UsersSerializer(users, many=True)
-    return Response({"room": room_serializer.data, "users":users_serializer.data})
+    users_sorted = sorted(users_serializer.data, key=lambda x: x['admin'], reverse=True)
+    return Response({"room": room_serializer.data, "users":users_sorted})
 
 @api_view(['DELETE'])
 def delete_user(request, id):
