@@ -34,6 +34,8 @@ export default function MasterCreateUser() {
 
   const [roomLinkInfo, setRoomLinkInfo] = useState({'room': "", "user": ""})
 
+  const [openPref, setOpenPref] = useState<string>("")
+
   const [isSubmiting, setIsSubmiting] = useState(true)
 
   const [wish, setWish] = useState<{ id: number; value: string; link: string }[]>([
@@ -62,7 +64,9 @@ export default function MasterCreateUser() {
   }, []);
 
   async function create() {
-    const data ={"room":room, "userData":userData, "wish": wish, "pref": pref, "room_key":room.roomId}
+    const sendWish = openPref == "wish" ? wish : []
+    const sendPref = openPref == "pref" ? pref : ""
+    const data ={"room":room, "userData":userData, "wish": sendWish, "pref": sendPref, "room_key":room.roomId}
     const res = await fetch('http://127.0.0.1:8000/api/v1/create', {
       method: "POST",
       headers: {
@@ -92,7 +96,8 @@ export default function MasterCreateUser() {
     return(
         <>
           <CreationFeedBack variant={room.roomName != "" ? 3 : 6} />
-          <CreatePreferance maxPrice={room.maxPrice} setState={setState} wish={wish} setWish={setWish} pref={pref} setPref={setPref} submitResult={create}/>
+          <CreatePreferance maxPrice={room.maxPrice} setState={setState} wish={wish} setWish={setWish} pref={pref} setPref={setPref} submitResult={create}
+          openPref={openPref} setOpenPref={setOpenPref}/>
         </>
     )
   case "finish":

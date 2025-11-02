@@ -22,6 +22,8 @@ type incomingProps = {
   pref: string;
   setPref: React.Dispatch<React.SetStateAction<string>>;
   submitResult: () => void;
+  openPref: string;
+  setOpenPref: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export default function CreatePreferance({
@@ -32,8 +34,9 @@ export default function CreatePreferance({
   pref,
   setPref,
   submitResult,
+  openPref,
+  setOpenPref
 }: incomingProps) {
-
 
   const [linkCount, setLinkCount] = useState(1);
   function handleAddWish() {
@@ -65,10 +68,12 @@ export default function CreatePreferance({
         type="single"
         collapsible
         className="w-full flex flex-col gap-4 overflow-hidden"
+        value={openPref}
+        onValueChange={setOpenPref}
       >
         <div className="border-2 rounded-md overflow-hidden">
           <AccordionItem
-            value="item-1"
+            value="wish"
             className="data-[state=open]:bg-[#76977E]/30 px-2 overflow-hidden"
           >
             <AccordionTrigger className="group">
@@ -132,7 +137,7 @@ export default function CreatePreferance({
         </div>
         <div className="border-2 rounded-md">
           <AccordionItem
-            value="item-2"
+            value="pref"
             className="data-[state=open]:bg-[#76977E]/30 px-2"
           >
             <AccordionTrigger className="group">

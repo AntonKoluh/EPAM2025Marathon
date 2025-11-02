@@ -1,5 +1,6 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework import status
 from base.models import Users, Room
 from .serializers import UsersSerializer, RoomSerializer
 
@@ -16,7 +17,8 @@ def createroom(request):
 @api_view(['GET'])
 def get_room_inv(request, roomid):
     room = Room.objects.filter(room_code=roomid).first()
-    return Response({"date":room.exchange_date, "maxPrice":room.budget, "welcomeMsg":room.msg, "name":room.name})
+    return Response({"date":room.exchange_date, "maxPrice":room.budget,
+                        "welcomeMsg":room.msg, "name":room.name})
 
 @api_view(['GET'])
 def get_room_info(request, room, user):
@@ -38,5 +40,23 @@ def get_room_info(request, room, user):
             item.code = "" if item.code != user else item.code
             
     users_serializer = UsersSerializer(users, many=True)
-    print(users_serializer.data)
     return Response({"room": room_serializer.data, "users":users_serializer.data})
+
+@api_view(['DELETE'])
+def delete_user(request, id):
+    user_code = request.query_params.get("userCode")
+
+    user_to_delete = Users.objects.filter(id=id).first()
+    room = Room.objects.filter(room_code=user_to_delete.room_code).first()
+
+    if not user_to_delete or not room:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if room.master != user_code:
+        return Response(status=status.HTTP_403_FORBIDDEN)
+    
+    if user_to_delete.admin:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+    user_to_delete.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)

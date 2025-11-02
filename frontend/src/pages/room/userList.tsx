@@ -25,9 +25,11 @@ import InputCopy from "@/components/inputCopy";
 
 export default function UserList({
   roomInfo,
+  setRoomInfo,
   user,
 }: {
   roomInfo: fetchType | null;
+  setRoomInfo: React.Dispatch<React.SetStateAction<fetchType | null>>;
   user: string;
 }) {
   const playersCount = roomInfo?.users.length || 0;
@@ -36,7 +38,6 @@ export default function UserList({
   const currentUser =
     roomInfo?.users.filter((item) => item.code === user)[0]?.id || -1;
 
-  console.log(currentAdmin, currentUser);
 
   return (
     <div className="bg-white rounded-xl flex-2 w-full h-fit p-4 shadow-md/40 flex flex-col justify-center items-center">
@@ -59,8 +60,10 @@ export default function UserList({
           <UserCard
             key={items.id}
             user={items}
+            currentCode={user}
             currentUser={currentUser}
             currentAdmin={currentAdmin}
+            setRoomInfo={setRoomInfo}
           />
         ))}
       </div>
@@ -72,10 +75,14 @@ function UserCard({
   user,
   currentUser,
   currentAdmin,
+  currentCode,
+  setRoomInfo,
 }: {
   user: usersInfoType;
   currentUser: number;
   currentAdmin: number;
+  currentCode: string;
+  setRoomInfo: React.Dispatch<React.SetStateAction<fetchType | null>>;
 }) {
   const fullName =
     user.fn.charAt(0).toUpperCase() +
@@ -109,7 +116,7 @@ function UserCard({
         )}
         {currentUser === currentAdmin && (
           <>
-            {user.id != currentAdmin && <DeleteConfirmation user={user} />}
+            {user.id != currentAdmin && <DeleteConfirmation user={user} code={currentCode} setRoomInfo={setRoomInfo}/>}
             <img
               src={linksvg}
               alt="link copy button"
@@ -138,7 +145,35 @@ function InfoHover({ user }: { user: usersInfoType }) {
   );
 }
 
-function DeleteConfirmation({ user }: { user: usersInfoType }) {
+function DeleteConfirmation({ user, code, setRoomInfo }: { user: usersInfoType; code: string, setRoomInfo : React.Dispatch<React.SetStateAction<fetchType | null>>; }) {
+
+  async function deleteUser(){
+    const result = await fetch(`http://127.0.0.1:8000/api/v1/user/${user.id}?userCode=${code}`, {
+    method: "DELETE",
+    });
+    switch (result.status){
+      case 204:
+        setRoomInfo((prev) => ({
+          "room": prev!.room,
+          "users": prev!.users.filter(item => item.id != user.id)
+        }))
+        toast(`${user.fn + " " + user.ln} removed successfully`)
+        break;
+      case 400:
+        toast("Admin cannot remove himself")
+        break;
+      case 403:
+        toast("Not allowed to perform this action")
+        break;
+      case 404:
+        toast("User or room not found")
+        break;
+      default:
+        toast (`Unknown error (${result.status})`)
+        break;
+    }
+  }
+
   return (
     <Dialog>
       <DialogTrigger>
@@ -155,16 +190,19 @@ function DeleteConfirmation({ user }: { user: usersInfoType }) {
             Removing {user.fn + " " + user.ln} will kick them from the room!
             *They can be reinvited at a later time prior to game starting *You
             cannot remove participants after the game has began
-            <div className="flex flex-row justify-center gap-6 mt-6">
-              <button className="bg-(--red) py-1 w-40 text-xl rounded-xl font-semibold shadow-md/30 text-black hover:shadow-md hover:bg-red-400 transition-all duration-150 cursor-pointer">
+            <span className="flex flex-row justify-center gap-6 mt-6">
+              <button className="bg-(--red) py-1 w-40 text-xl rounded-xl font-semibold shadow-md/30 text-black hover:shadow-md hover:bg-red-400 transition-all duration-150 cursor-pointer"
+              onClick={deleteUser}
+              >
                 Remove
               </button>
               <DialogClose asChild>
-                <button className="bg-gray-100 py-1 w-40 text-xl rounded-xl font-semibold shadow-md/30 text-black hover:shadow-md hover:gray-300 transition-all duration-150 cursor-pointer">
+                <button className="bg-gray-100 py-1 w-40 text-xl rounded-xl font-semibold shadow-md/30 text-black hover:shadow-md hover:gray-300 transition-all duration-150 cursor-pointer"
+                >
                   Cancel
                 </button>
               </DialogClose>
-            </div>
+            </span>
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
@@ -188,7 +226,7 @@ function ParticipantDetails({ user }: { user: usersInfoType }) {
             <div className="flex flex-row justify-start items-top gap-5">
               <img src={cookie} alt="cookie pic" />
               <div>
-                <h2 className="text-xl font-semibold">Partipant Details</h2>
+                <p className="text-xl font-semibold">Partipant Details</p>
                 <p className="text-normal text-sm mt-2">
                   Everything about your Saint Nick player
                 </p>

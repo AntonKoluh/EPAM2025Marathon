@@ -24,3 +24,9 @@ export type fetchType = {
   room: roomInfoType;
   users: usersInfoType[];
 };
+
+export type wishType = {
+  id: number;
+  value: string;
+  link: string;
+}

@@ -27,7 +27,8 @@ class Room(models.Model):
         date_obj = datetime.strptime(room.get("date"), "%m/%d/%Y").date()
         while cls.objects.filter(room_code = room_key).exists():
             room_key = generate_uid()
-        new_room = cls(master=master, exchange_date=date_obj, room_code=room_key, name=room.get("roomName"), msg=room.get("welcomeMsg"), budget=room.get("maxPrice"))
+        new_room = cls(master=master, exchange_date=date_obj, room_code=room_key, name=room.get("roomName"),
+                        msg=room.get("welcomeMsg"), budget=room.get("maxPrice"))
         new_room.save()
         return room_key
 
@@ -62,8 +63,8 @@ class Users(models.Model):
         while cls.objects.filter(code = generate_user_code).exists():
             generate_user_code = generate_uid()
         phone = "+380" + user.get('phone') if user.get('phone') != "" else ""
-        new_user = cls(fn=user.get('fn'), ln=user.get('ln'), phone=phone, email=user.get('email'), adress=user.get('adress'), pref=pref, links=wish, code=generate_user_code, room_code=room_key)
-        print(room_key)
+        new_user = cls(fn=user.get('fn'), ln=user.get('ln'), phone=phone, email=user.get('email'),
+                        adress=user.get('adress'), pref=pref, links=wish, code=generate_user_code, room_code=room_key)
         if data.get("room").get('roomName') != '':
             room_key = Room.create_room(data.get("room"), generate_user_code)
             new_user.admin = True

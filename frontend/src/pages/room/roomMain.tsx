@@ -6,6 +6,7 @@ import PersonalCard from "./personalCard";
 import RoomInfo from "./roomInfo";
 import UserList from "./userList";
 import WishList from "./wishList";
+import { GameControl } from "./gameControl"
 
 export default function RoomMain() {
   const { room, user } = useParams();
@@ -44,8 +45,11 @@ export default function RoomMain() {
         <PersonalCard roomInfo={roomInfo} user={user} />
       </div>
       <div className="flex flex-col sm:flex-row justify-start items-top gap-4 w-full mt-4">
-        <UserList roomInfo={roomInfo} user={user}/>
-        <WishList />
+        <UserList roomInfo={roomInfo} user={user} setRoomInfo={setRoomInfo}/>
+        <div className="flex flex-col justify-start items-center w-[267px] gap-4">
+        <GameControl />
+        <WishList roomInfo={roomInfo} user={user}/>
+        </div>
       </div>
     </div>
   );
