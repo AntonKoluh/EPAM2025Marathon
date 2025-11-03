@@ -12,6 +12,7 @@ export type usersInfoType = {
   fn: string;
   ln: string;
   email: string;
+  giftee: string;
   phone: string;
   admin: boolean;
   adress: string;

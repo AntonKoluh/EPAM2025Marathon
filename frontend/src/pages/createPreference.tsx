@@ -56,6 +56,13 @@ export default function CreatePreferance({
     setState("finish")
   }
 
+  function handlePrefChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    if (e.target.value.length >= 1001){
+      return
+    }
+    setPref(e.target.value)
+  }
+
   return (
     <div className="flex flex-col gap-4 px-10 py-4 overflow-hidden">
       <div className="flex flex-col gap-2 overflow-hidden">
@@ -148,7 +155,8 @@ export default function CreatePreferance({
             <AccordionContent className="flex flex-col gap-4 text-balance px-4">
               <div>
               <p>Add your interests <span className="text-red-600">*</span></p>
-              <textarea className="resize-none w-full h-20 rounded-xl p-1 text-black bg-(--gray) border-border border-3" value={pref} onChange={(e) => setPref(e.target.value)}/>
+              <textarea className="resize-none w-full h-48 rounded-xl p-1 text-black bg-(--gray) border-border border-3" value={pref} onChange={handlePrefChange}/>
+              <p className="text-right"><span className={pref.length == 1000 ? "text-red-600" : "text-gray-800"}>{pref.length} </span>/ 1000</p>
               </div>
             </AccordionContent>
           </AccordionItem>

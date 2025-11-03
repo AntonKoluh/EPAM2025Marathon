@@ -34,7 +34,7 @@ export default function WishList({
         {wishType == "pref" ? (
           <div className="line-clamp-6">{currentUser?.pref}</div>
         ) : (
-          <div className="w-full px-2 flex flex-col justify-start items-center gap-2 h-full overflow-y-auto my-scrollbar">
+          <div className="w-full p-2 flex flex-col justify-start items-center gap-2 h-full overflow-y-auto my-scrollbar">
             {currentUser?.links.map((wish: wishType) => (
               <WishCard wish={wish} key={wish.id} />
             ))}
@@ -52,7 +52,7 @@ export default function WishList({
   );
 }
 
-function WishCard({ wish }: { wish: wishType }) {
+export function WishCard({ wish }: { wish: wishType }) {
   return (
     <div className="shadow-md/20 bg-(--gray) rounded-xl py-2 px-4 flex flex-row justify-between items-center w-full">
       <p className="text-md font-medium w-full items-center">{wish.value}</p>

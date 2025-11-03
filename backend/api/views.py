@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from base.models import Users, Room
 from .serializers import UsersSerializer, RoomSerializer
+from .helpers import user_randomizer
 
 @api_view(['GET'])
 def getData(request):
@@ -30,18 +31,19 @@ def get_room_info(request, room, user):
     users = Users.objects.filter(room_code=room)
     if room_obj.master != user:
         for item in users:
-            if item.code == user or item.code == room_obj.master:
+            if item.code == user or item.code == room_obj.master or item.code == user_obj.giftee:
                 pass
             else:
                 item.email = ""
                 item.phone = 0
                 item.links = [{}]
                 item.pref = ""
-            item.code = "" if item.code != user else item.code
-            
+                item.code = ""
+            item.giftee = "" if item.code != user else item.giftee
+    
     users_serializer = UsersSerializer(users, many=True)
     users_sorted = sorted(users_serializer.data, key=lambda x: x['admin'], reverse=True)
-    return Response({"room": room_serializer.data, "users":users_sorted})
+    return Response({"room": room_serializer.data, "users":users_sorted}, status=status.HTTP_200_OK)
 
 @api_view(['DELETE'])
 def delete_user(request, id):
@@ -61,3 +63,25 @@ def delete_user(request, id):
     
     user_to_delete.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+def start_game(request, room, user):
+    user_obj = Users.objects.filter(code=user).first()
+    room_obj = Room.objects.filter(room_code=room).first()
+    room_users = Users.objects.filter(room_code=room)
+    if not user_obj:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    if user_obj.room_code != room or not user_obj.admin:
+        return Response(status=status.HTTP_403_FORBIDDEN)
+    if len(room_users) < 3:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+    room_users = user_randomizer(room_users)
+    Users.objects.bulk_update(room_users, ['giftee'])
+    users_serializer = UsersSerializer(room_users, many=True)
+    users_sorted = sorted(users_serializer.data, key=lambda x: x['admin'], reverse=True)
+    room_obj = Room.objects.filter(room_code=room).first()
+    room_obj.state = 1
+    room_obj.save()
+
+    return Response({"users": users_sorted}, status=status.HTTP_200_OK)

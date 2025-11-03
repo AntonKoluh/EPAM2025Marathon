@@ -64,6 +64,7 @@ export default function UserList({
             currentUser={currentUser}
             currentAdmin={currentAdmin}
             setRoomInfo={setRoomInfo}
+            roomState={roomInfo.room.state}
           />
         ))}
       </div>
@@ -77,12 +78,14 @@ function UserCard({
   currentAdmin,
   currentCode,
   setRoomInfo,
+  roomState,
 }: {
   user: usersInfoType;
   currentUser: number;
   currentAdmin: number;
   currentCode: string;
   setRoomInfo: React.Dispatch<React.SetStateAction<fetchType | null>>;
+  roomState: boolean | null;
 }) {
   const fullName =
     user.fn.charAt(0).toUpperCase() +
@@ -116,7 +119,7 @@ function UserCard({
         )}
         {currentUser === currentAdmin && (
           <>
-            {user.id != currentAdmin && <DeleteConfirmation user={user} code={currentCode} setRoomInfo={setRoomInfo}/>}
+            {user.id != currentAdmin && !roomState && <DeleteConfirmation user={user} code={currentCode} setRoomInfo={setRoomInfo}/>}
             <img
               src={linksvg}
               alt="link copy button"

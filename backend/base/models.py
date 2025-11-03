@@ -44,6 +44,7 @@ class Users(models.Model):
     email = models.CharField(max_length=100, null=True, blank=True)
     adress = models.CharField(max_length=250)
     admin = models.BooleanField(default=False)
+    giftee = models.CharField(blank=True, null=True)
     pref = models.CharField(max_length=250, null=True, blank=True)
     links = models.JSONField(default=list, validators=[validate_items], blank=True)
     code = models.CharField(max_length=7)
