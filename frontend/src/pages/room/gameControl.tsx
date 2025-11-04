@@ -4,17 +4,9 @@ import { useContext, useState } from "react";
 import { RoomContext } from "./roomMain.tsx";
 import { toast } from "sonner";
 import { useParams } from "react-router";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog.tsx";
 import type { usersInfoType, wishType } from "@/helpers/types.ts";
 import { WishCard } from "./wishList.tsx";
+import Modal from "@/components/Modal.tsx";
 
 export function StartGame() {
   const ctx = useContext(RoomContext);
@@ -106,28 +98,25 @@ export function ViewGiftee() {
 function GifteeView({ giftee }: { giftee: usersInfoType | undefined }) {
   const giftType = giftee!.pref != "" ? "pref" : "wish";
 
-  return (
-    <Dialog>
-      <DialogTrigger className="w-full mx-auto">
-        <p className="w-5/6 my-2 mx-auto text-xl border-black border-3 rounded-xl shadow-md/20 hover:shadow-md hover:bg-gray-200 transition-all duration-150 cursor-pointer">
+    const trigger = (
+        <div className="w-4/5 mx-auto my-2 text-xl border-black border-3 rounded-xl shadow-md/20 hover:shadow-md
+        hover:bg-gray-200 transition-all duration-150 cursor-pointer">
           Read Details
-        </p>
-      </DialogTrigger>
-      <DialogContent className="h-fit w-full p-0!">
-        <DialogHeader className="w-full">
-          <DialogTitle className="w-full h-20 bg-[#DED6C7] rounded-t-md">
+        </div>
+    )
+    const title = (
             <span className="relative flex flex-row justify-center items-center gap-5  w-full h-full rounded-t-xl">
               <img
                 src={snick}
                 alt="gift img"
                 className="absolute size-70 bottom-0 left-1/2 -translate-x-1/2"
               />
-              <p className="my-auto text-(--red) font-bold text-xl">
+              <span className="my-auto text-(--red) font-bold text-xl">
                 Look who you got!
-              </p>
+              </span>
             </span>
-          </DialogTitle>
-          <DialogDescription className="h-fit">
+    )
+    const children = (
             <span className="flex flex-col justify-start items-center w-full h-full gap-2 px-4">
               <span className="gap-2 flex flex-row justify-start items-top w-full">
                 <span className="flex gap-2 flex-col justify-start items-left flex-1/2 w-full p-4">
@@ -196,15 +185,7 @@ function GifteeView({ giftee }: { giftee: usersInfoType | undefined }) {
                   )}
                 </span>
               </span>
-              <DialogClose asChild>
-                <button className="text-center mt-auto mb-4 mr-4 ml-auto bg-(--green) py-1 w-60 text-xl rounded-xl font-semibold shadow-md/30 text-white hover:shadow-md hover:bg-green-700 transition-all duration-150 cursor-pointer">
-                  Go Back to Room
-                </button>
-              </DialogClose>
-            </span>
-          </DialogDescription>
-        </DialogHeader>
-      </DialogContent>
-    </Dialog>
-  );
+              </span>
+    )
+  return <Modal title={title} trigger={trigger}>{children}</Modal>
 }

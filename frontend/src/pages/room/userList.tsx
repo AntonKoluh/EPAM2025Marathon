@@ -22,22 +22,16 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import InputCopy from "@/components/inputCopy";
+import { useContext } from "react";
+import { RoomContext } from "./roomMain";
+import Modal from "@/components/Modal";
 
-export default function UserList({
-  roomInfo,
-  setRoomInfo,
-  user,
-}: {
-  roomInfo: fetchType | null;
-  setRoomInfo: React.Dispatch<React.SetStateAction<fetchType | null>>;
-  user: string;
-}) {
+export default function UserList() {
+  
+    const ctx = useContext(RoomContext);
+    if (!ctx) throw new Error("RoomContext.Provider is missing");
+    const { currentUser, currentAdmin, user, setRoomInfo, roomInfo } = ctx;
   const playersCount = roomInfo?.users.length || 0;
-  const currentAdmin =
-    roomInfo?.users.filter((item) => item.admin === true)[0]?.id || -1;
-  const currentUser =
-    roomInfo?.users.filter((item) => item.code === user)[0]?.id || -1;
-
 
   return (
     <div className="bg-white rounded-xl flex-2 w-full h-fit p-4 shadow-md/40 flex flex-col justify-center items-center max-h-130">
@@ -177,6 +171,7 @@ function DeleteConfirmation({ user, code, setRoomInfo }: { user: usersInfoType; 
     }
   }
 
+
   return (
     <Dialog>
       <DialogTrigger>
@@ -214,18 +209,15 @@ function DeleteConfirmation({ user, code, setRoomInfo }: { user: usersInfoType; 
 }
 
 function ParticipantDetails({ user }: { user: usersInfoType }) {
-  return (
-    <Dialog>
-      <DialogTrigger>
+  const trigger = (
         <img
           src={infocircle}
           alt="info button"
           className="cursor-pointer hover:bg-gray-200"
         />
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>
+  )
+
+  const title = (
             <div className="flex flex-row justify-start items-top gap-5">
               <img src={cookie} alt="cookie pic" />
               <div>
@@ -235,9 +227,10 @@ function ParticipantDetails({ user }: { user: usersInfoType }) {
                 </p>
               </div>
             </div>
-          </DialogTitle>
-          <DialogDescription>
-            <div>
+  )
+
+  const children = (
+<div>
               <h2 className="text-xl font-semibold mt-2 text-black">
                 Personal Information
               </h2>
@@ -287,16 +280,8 @@ function ParticipantDetails({ user }: { user: usersInfoType }) {
                 </div>
               </div>
             </div>
-            <div className="flex flex-row justify-center gap-6 mt-6">
-              <DialogClose asChild>
-                <button className="text-center ml-auto bg-(--green) py-1 w-60 text-xl rounded-xl font-semibold shadow-md/30 text-white hover:shadow-md hover:bg-green-700 transition-all duration-150 cursor-pointer">
-                  Go Back to Room
-                </button>
-              </DialogClose>
-            </div>
-          </DialogDescription>
-        </DialogHeader>
-      </DialogContent>
-    </Dialog>
+  )
+  return (
+    <Modal trigger={trigger} title={title}>{children}</Modal>
   );
 }

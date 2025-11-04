@@ -13,6 +13,8 @@ type roomContextType = {
   roomInfo: fetchType | null;
   setRoomInfo: React.Dispatch<React.SetStateAction<fetchType | null>>;
   user: string;
+  currentAdmin: number;
+  currentUser: number;
 }
 
 export const RoomContext = createContext<roomContextType | null>(null)
@@ -45,18 +47,24 @@ export default function RoomMain() {
   if (isLoading) {
     return <h1>Loading</h1>;
   }
+
+    const currentAdmin =
+    roomInfo?.users.filter((item) => item.admin === true)[0]?.id || -1;
+  const currentUser =
+    roomInfo?.users.filter((item) => item.code === user)[0]?.id || -1;
+
   return (
-    <RoomContext.Provider value={{roomInfo, setRoomInfo, user}}>
+    <RoomContext.Provider value={{roomInfo, setRoomInfo, user, currentAdmin, currentUser}}>
     <div className="flex flex-col jsutify-start items-top w-full p-6 h-fit">
       <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full h-fit">
         <RoomInfo roomInfo={roomInfo} />
         <PersonalCard roomInfo={roomInfo} user={user} />
       </div>
       <div className="flex flex-col sm:flex-row justify-start items-top gap-4 w-full mt-4 h-fit min-h-0 overflow-hidden py-1">
-        <UserList roomInfo={roomInfo} user={user} setRoomInfo={setRoomInfo}/>
+        <UserList />
         <div className="flex flex-col justify-start items-center w-[267px] gap-4">
         {roomInfo?.room.state === true ? <ViewGiftee /> : roomInfo?.users.filter(item => item.code == user)[0].admin ? <StartGame /> :  null}
-        <WishList roomInfo={roomInfo} user={user}/>
+        <WishList />
         </div>
       </div>
     </div>

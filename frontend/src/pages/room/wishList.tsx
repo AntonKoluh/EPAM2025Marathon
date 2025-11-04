@@ -1,23 +1,14 @@
-import type { fetchType, wishType } from "@/helpers/types";
+import type { wishType } from "@/helpers/types";
 import snowflake from "@/assets/snowflake.svg";
 import presents from "@/assets/presents.svg";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { RoomContext } from "./roomMain";
+import { useContext } from "react";
+import Modal from "@/components/Modal";
 
-export default function WishList({
-  roomInfo,
-  user,
-}: {
-  roomInfo: fetchType | null;
-  user: string;
-}) {
+export default function WishList() {
+    const ctx = useContext(RoomContext);
+    if (!ctx) throw new Error("RoomContext.Provider is missing");
+    const { roomInfo, user } = ctx;
   const currentUser = roomInfo?.users.filter((item) => item.code === user)[0];
   const wishType = currentUser?.pref != "" ? "pref" : "wish";
 
@@ -54,15 +45,15 @@ export default function WishList({
 
 export function WishCard({ wish }: { wish: wishType }) {
   return (
-    <div className="shadow-md/20 bg-(--gray) rounded-xl py-2 px-4 flex flex-row justify-between items-center w-full">
-      <p className="text-md font-medium w-full items-center">{wish.value}</p>
-      <div className="flex flex-row gap-2 w-full justify-end text-right items-center">
+    <span className="shadow-md/20 bg-(--gray) rounded-xl py-2 px-4 flex flex-row justify-between items-center w-full">
+      <span className="text-md font-medium w-full items-center">{wish.value}</span>
+      <span className="flex flex-row gap-2 w-full justify-end text-right items-center">
         <span className="w-0.5 h-3 bg-black" />
         <a href={wish.link} className="text-purple-700 underline!">
           Link
         </a>
-      </div>
-    </div>
+      </span>
+    </span>
   );
 }
 
@@ -73,50 +64,41 @@ function ViewWish({
   budget: number | undefined;
   wish: wishType[] | undefined;
 }) {
-  return (
-    <Dialog>
-      <DialogTrigger className="w-full">
-        <p
-          className="text-md py-1 border-3 border-black w-full rounded-4xl shadow-md/50 hover:shadow-md
-                transition-all duration-150 hover:bg-gray-200 cursor-pointer"
-        >
-          View Wishlist
-        </p>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>
-            <div className="flex flex-row justify-start items-top gap-5">
+const trigger = (
+  <p
+    className="text-md py-1 border-3 border-black w-full rounded-4xl shadow-md/50 hover:shadow-md
+    transition-all duration-150 hover:bg-gray-200 cursor-pointer"
+  >
+    View Wishlist
+  </p>
+);
+  const title = (
+  <span className="flex flex-row justify-start items-top gap-5">
               <img src={presents} alt="presents pic" />
-              <div>
-                <h2 className="text-xl font-semibold">Your Wishlist</h2>
-                <p className="text-normal text-[12px] mt-2">
+              <span className="flex flex-col">
+                <span className="text-xl font-semibold">Your Wishlist</span>
+                <span className="text-normal text-[12px] mt-2">
                   Let your Secret Nick know what would make you smile this
                   season.
-                </p>
-                <p className="font-bold text-[14px] mt-2">
+                </span>
+                <span className="font-bold text-[14px] mt-2">
                   Gift Budget: {budget == 0 ? "Unlimited" : budget}
-                </p>
-              </div>
-            </div>
-          </DialogTitle>
-          <DialogDescription>
-            <div className="flex flex-col justify-start items-center w-full">
-              <div className="w-full px-2 flex flex-col justify-center items-center gap-2 my-4">
+                </span>
+              </span>
+            </span>
+            )
+
+  const children = (
+            <span className="flex flex-col justify-start items-center w-full">
+              <span className="w-full px-2 flex flex-col justify-center items-center gap-2 my-4">
                 {wish?.map((wish: wishType) => (
                   <WishCard wish={wish} key={wish.id} />
                 ))}
-              </div>
-              <DialogClose asChild>
-                <button className="text-center ml-auto bg-(--green) py-1 w-60 text-xl rounded-xl font-semibold shadow-md/30 text-white hover:shadow-md hover:bg-green-700 transition-all duration-150 cursor-pointer">
-                  Go Back to Room
-                </button>
-              </DialogClose>
-            </div>
-          </DialogDescription>
-        </DialogHeader>
-      </DialogContent>
-    </Dialog>
+              </span>
+              </span>
+  )
+  return (
+    <Modal title={title} trigger={trigger} >{children}</Modal>
   );
 }
 
@@ -127,45 +109,37 @@ function ViewPref({
   budget: number | undefined;
   pref: string | undefined;
 }) {
-  return (
-    <Dialog>
-      <DialogTrigger className="w-full">
-        <p
+  const trigger = (
+    <span
           className="text-md py-1 border-3 border-black w-full rounded-4xl shadow-md/50 hover:shadow-md
                 transition-all duration-150 hover:bg-gray-200 cursor-pointer"
         >
           View Prefference
-        </p>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader className="w-full">
-          <DialogTitle>
-            <div className="flex flex-row justify-start items-top gap-5">
+    </span>
+  )
+  const title = (
+            <span className="flex flex-row justify-start items-top gap-5 h-full">
               <img src={presents} alt="presents pic" />
-              <div>
-                <h2 className="text-xl font-semibold">Your Wishlist</h2>
-                <p className="text-normal text-[12px] mt-2">
+              <span className="flex flex-col">
+                <span className="text-xl font-semibold">Your Wishlist<br/></span>
+                <span className="text-normal text-[12px] mt-2">
                   Let your Secret Nick know what would make you smile this
                   season.
-                </p>
-                <p className="font-bold text-[14px] mt-2">
+                </span>
+                <span className="font-bold text-[14px] mt-2">
                   Gift Budget: {budget == 0 ? "Unlimited" : budget}
-                </p>
-              </div>
-            </div>
-          </DialogTitle>
-          <DialogDescription className="flex flex-col justify-start items-left w-full bg-(--gray) rounded-xl gap-4 p-5 shadow-md/20">
+                </span>
+              </span>
+            </span>
+  )
+  const children = (
+    <span className="flex flex-col justify-top items-left">
             <span className="text-[18px] font-bold text-gray-800">Suprise me!</span>
             <span className="w-full h-px bg-gray-400" />
             <span className="text-[14px] text-gray-800">{pref}</span>
-          </DialogDescription>
-          <DialogClose asChild>
-            <button className="mt-2 text-center ml-auto bg-(--green) py-1 w-60 text-xl rounded-xl font-semibold shadow-md/30 text-white hover:shadow-md hover:bg-green-700 transition-all duration-150 cursor-pointer">
-              Go Back to Room
-            </button>
-          </DialogClose>
-        </DialogHeader>
-      </DialogContent>
-    </Dialog>
+    </span>
+  )
+  return (
+    <Modal title={title} trigger={trigger}>{children}</Modal>
   );
 }

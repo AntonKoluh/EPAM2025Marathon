@@ -2,6 +2,8 @@ import balldecor from "@/assets/Balldecor.svg";
 import type { fetchType } from "@/helpers/types";
 
 export default function RoomInfo({ roomInfo }: { roomInfo: fetchType | null }) {
+  
+
   return (
     <div className="bg-(--green)/90 rounded-xl flex-2 w-full h-60 p-4 shadow-[2px_2px_10px] flex flex-col justify-center items-center">
       <div className="text-xl flex flex-row justify-between items-top flex-3/5 w-full p-0">

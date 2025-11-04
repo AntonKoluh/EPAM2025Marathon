@@ -2,7 +2,7 @@ import InputCopy from "@/components/inputCopy";
 import roomvector from "@/assets/roomvector.svg";
 import car from "@/assets/car.svg";
 import type { fetchType, usersInfoType } from "@/helpers/types";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import Modal from "@/components/Modal";
 
 export default function PersonalCard({
   roomInfo,
@@ -33,84 +33,75 @@ export default function PersonalCard({
 }
 
 function PersonInfo({ user }: { user: usersInfoType | undefined }) {
-  return (
-    <Dialog>
-      <DialogTrigger>
-      <p
-        className="absolute top-50 left-1/2 -translate-x-1/2 transform-4/5 font-bold rounded-xl border-gray-950 border-3 w-50 py-0.5
-          hover:bg-(--red) hover:text-white transform-all duration-150 cursor-pointer
-          "
-      >
-        View Information
-      </p>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>
-            <div className="flex flex-row justify-start items-top gap-5">
-              <img src={car} alt="cookie pic" />
-              <div>
-                <h2 className="text-xl font-semibold">Personal Information</h2>
-                <p className="text-normal text-sm mt-2">
-                  Secret Nick needs to know where to send your presents!
-                </p>
-              </div>
-            </div>
-          </DialogTitle>
-          <DialogDescription>
-            <div>
-              <h2 className="text-xl font-semibold mt-2 text-black">
+  
+  const trigger = (
+    <p
+      className="absolute top-50 left-1/2 -translate-x-1/2 transform-4/5 font-bold rounded-xl border-gray-950 border-3 w-50 py-0.5
+        hover:bg-(--red) hover:text-white transform-all duration-150 cursor-pointer
+        "
+    >
+      View Information
+    </p>
+  )
+  const title = (
+      <span className="flex flex-row justify-start items-top gap-5">
+        <img src={car} alt="cookie pic" />
+        <span className="flex flex-col">
+        <span className="text-xl font-semibold">Personal Information</span>
+          <span className="text-normal text-sm mt-2">
+            Secret Nick needs to know where to send your presents!
+          </span>
+        </span>
+      </span>
+  )
+  
+  const children = (
+              <span className="flex flex-col">
+              <span className="text-xl font-semibold mt-2 text-black">
                 Personal Information
-              </h2>
-              <div className="flex flex-col gap-10 justify-start items-top bg-(--bg-green)/50 border-border border-3 rounded-md">
-                <div className="mt-2 flex flex-row w-full justify-start items-top p-4 gap-4">
-                  <div className="mt-2 flex flex-col w-full justify-start items-top p-4 gap-4">
-                    <div>
-                      <p className="text-gray-800">First name</p>
-                      <p className="text-black font-semibold text-xl">
+              </span>
+              <span className="flex flex-col gap-10 justify-start items-top bg-(--bg-green)/50 border-border border-3 rounded-md">
+                <span className="mt-2 flex flex-row w-full justify-start items-top p-4 gap-4">
+                  <span className="mt-2 flex flex-col w-full justify-start items-top p-4 gap-4">
+                    <span className="flex flex-col">
+                      <span className="text-gray-800">First name</span>
+                      <span className="text-black font-semibold text-xl">
                         {user?.fn}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-gray-800">Phone number</p>
-                      <p className="text-black font-semibold text-xl">
+                      </span>
+                    </span>
+                    <span className="flex flex-col">
+                      <span className="text-gray-800">Phone number</span>
+                      <span className="text-black font-semibold text-xl">
                         +{user?.phone}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-gray-800">Devlivery address</p>
-                      <p className="text-black font-semibold text-xl">
+                      </span>
+                    </span>
+                    <span className="flex flex-col">
+                      <span className="text-gray-800">Devlivery address</span>
+                      <span className="text-black font-semibold text-xl">
                         {user?.adress}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="mt-2 flex flex-col w-full justify-start items-top p-4 gap-4">
-                    <div>
-                      <p className="text-gray-800">Last name</p>
-                      <p className="text-black font-semibold text-xl">
+                      </span>
+                    </span>
+                  </span>
+                  <span className="mt-2 flex flex-col w-full justify-start items-top p-4 gap-4">
+                    <span className="flex flex-col">
+                      <span className="text-gray-800">Last name</span>
+                      <span className="text-black font-semibold text-xl">
                         {user?.ln}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-gray-800">Email</p>
-                      <p className="text-black font-semibold text-xl">
+                      </span>
+                    </span>
+                    <span className="flex flex-col">
+                      <span className="text-gray-800">Email</span>
+                      <span className="text-black font-semibold text-xl">
                         {user?.email != "" ? user?.email : "-"}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-row justify-center gap-6 mt-6">
-              <DialogClose asChild>
-                <button className="text-center ml-auto bg-(--green) py-1 w-60 text-xl rounded-xl font-semibold shadow-md/30 text-white hover:shadow-md hover:bg-green-700 transition-all duration-150 cursor-pointer">
-                  Go Back to Room
-                </button>
-              </DialogClose>
-            </div>
-          </DialogDescription>
-        </DialogHeader>
-      </DialogContent>
-    </Dialog>
+                      </span>
+                    </span>
+                  </span>
+                </span>
+              </span>
+            </span>
+  )
+  
+  return (
+    <Modal trigger={trigger} title={title}>{children}</Modal>
   );
 }
