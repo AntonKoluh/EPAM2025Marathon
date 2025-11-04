@@ -11,14 +11,16 @@ import {
 export default function Modal({
   children,
   trigger,
-  title
+  title,
+  width = "full",
 }: {
   children: React.ReactNode;
   trigger: React.ReactNode;
   title: React.ReactNode;
+  width?: string; 
 }) {
   return (<Dialog>
-    <DialogTrigger className="w-full">
+    <DialogTrigger className={width == "full" ? "w-full" : "w-fit"}>
       {trigger}
     </DialogTrigger>
     <DialogContent>

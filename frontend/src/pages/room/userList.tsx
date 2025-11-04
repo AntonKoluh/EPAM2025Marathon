@@ -213,7 +213,7 @@ function ParticipantDetails({ user }: { user: usersInfoType }) {
         <img
           src={infocircle}
           alt="info button"
-          className="cursor-pointer hover:bg-gray-200"
+          className="cursor-pointer hover:bg-gray-200 w-fit"
         />
   )
 
@@ -282,6 +282,6 @@ function ParticipantDetails({ user }: { user: usersInfoType }) {
             </div>
   )
   return (
-    <Modal trigger={trigger} title={title}>{children}</Modal>
+    <Modal trigger={trigger} title={title} width={"fit"}>{children}</Modal>
   );
 }
