@@ -23,7 +23,7 @@ export function StartGame() {
     }
 
     const result = await fetch(
-      `http://127.0.0.1:8000/api/v1/room/start/${room}/${user}/`
+      `${import.meta.env.VITE_API_URL}v1/room/start/${room}/${user}/`
     );
     const data = await result.json();
     console.log(data.users);

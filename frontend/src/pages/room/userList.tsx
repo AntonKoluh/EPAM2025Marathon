@@ -148,7 +148,7 @@ function DeleteConfirmation({ user, code, setRoomInfo }: { user: usersInfoType; 
 
   async function deleteUser(){
     setIsSubmitting(true)
-    const result = await fetch(`http://127.0.0.1:8000/api/v1/user/${user.id}?userCode=${code}`, {
+    const result = await fetch(`${import.meta.env.VITE_API_URL}v1/user/${user.id}?userCode=${code}`, {
     method: "DELETE",
     });
     switch (result.status){

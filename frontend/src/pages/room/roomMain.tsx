@@ -32,7 +32,7 @@ export default function RoomMain() {
   useEffect(() => {
     async function getRoomInfo() {
       const data = await fetch(
-        `http://127.0.0.1:8000/api/v1/room/${room}/${user}/`
+        `${import.meta.env.VITE_API_URL}v1/room/${room}/${user}/`
       );
       const response = await data.json();
       if (response.error) {

@@ -20,7 +20,7 @@ export default function JoinRoomByCode() {
 
   async function getRoom() {
     try {
-    const res = await fetch("http://127.0.0.1:8000/api/v1/room/" + id);
+    const res = await fetch(`${import.meta.env.VITE_API_URL}v1/room/` + id);
     const result = await res.json();
     setRoomInfo(result);
     }

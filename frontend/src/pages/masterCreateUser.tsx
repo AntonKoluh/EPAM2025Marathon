@@ -67,7 +67,7 @@ export default function MasterCreateUser() {
     const sendWish = openPref == "wish" ? wish : []
     const sendPref = openPref == "pref" ? pref : ""
     const data ={"room":room, "userData":userData, "wish": sendWish, "pref": sendPref, "room_key":room.roomId}
-    const res = await fetch('http://127.0.0.1:8000/api/v1/create', {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}v1/create`, {
       method: "POST",
       headers: {
       "Content-Type": "application/json",
