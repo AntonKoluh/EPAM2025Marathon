@@ -38,6 +38,7 @@ export default function CreatePreferance({
   setOpenPref
 }: incomingProps) {
 
+  const [isSubmitting, setIsSubmiting] = useState(false)
   const [linkCount, setLinkCount] = useState(1);
   function handleAddWish() {
     if (linkCount === 5) {
@@ -51,8 +52,10 @@ export default function CreatePreferance({
     setState("user")
   }
 
-  function handleFinish(){
+  async function handleFinish(){
+    setIsSubmiting(true)
     submitResult()
+    setIsSubmiting(false)
     setState("finish")
   }
 
@@ -166,6 +169,7 @@ export default function CreatePreferance({
           type="submit"
           className="rounded-4xl bg-(--green) h-12 text-xl text-gray-100 hover:bg-(--green)/80 shadow-md/40 hover:shadow-sm cursor-pointer"
           onClick={handleFinish}
+          disabled={isSubmitting}
         >
           Continue
         </button>

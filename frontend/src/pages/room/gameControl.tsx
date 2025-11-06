@@ -17,7 +17,6 @@ export function StartGame() {
 
   async function drawNames() {
     setIsLoading(true);
-
     if ((roomInfo?.users.length || 0) < 3) {
       toast("Cannot start game with less than 3 players");
       return;

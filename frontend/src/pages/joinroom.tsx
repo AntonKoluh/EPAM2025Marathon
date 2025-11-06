@@ -9,6 +9,7 @@ type roomInfoType = {
   maxPrice: number;
   welcomeMsg: string;
   name: string;
+  active: boolean;
 };
 
 export default function JoinRoomByCode() {
@@ -18,12 +19,14 @@ export default function JoinRoomByCode() {
   const { id } = useParams();
 
   async function getRoom() {
+    try {
     const res = await fetch("http://127.0.0.1:8000/api/v1/room/" + id);
     const result = await res.json();
     setRoomInfo(result);
-    console.log(result);
+    }
+    finally {
     setIsLoading(false);
-    return result;
+    }
   }
 
   useEffect(() => {
@@ -51,6 +54,13 @@ export default function JoinRoomByCode() {
   if (isLoading) {
     return <h2>Loading</h2>;
   }
+  if (!roomInfo) {
+    return <h2>Room not found</h2>;
+  }
+  if (!roomInfo.active) {
+    return <h2>Unable to join - Maximum participants reached or game has already started!</h2>;
+  }
+  if (roomInfo.active) {
   return (
     <div className="flex flex-col px-12 w-full py-6 mt-14 gap-3 h-full">
       <div className="flex flex-row justify-between h-fit">
@@ -100,4 +110,5 @@ export default function JoinRoomByCode() {
       </Link>
     </div>
   );
+}
 }

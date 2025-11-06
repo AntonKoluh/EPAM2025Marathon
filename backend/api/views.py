@@ -5,11 +5,6 @@ from base.models import Users, Room
 from .serializers import UsersSerializer, RoomSerializer
 from .helpers import user_randomizer
 
-@api_view(['GET'])
-def getData(request):
-    person = {'name': 'me', 'age':20}
-    return Response(person)
-
 @api_view(['POST'])
 def createroom(request):
     keys = Users.create_user(request.data)
@@ -18,8 +13,11 @@ def createroom(request):
 @api_view(['GET'])
 def get_room_inv(request, roomid):
     room = Room.objects.filter(room_code=roomid).first()
+    if not room:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    active = not room.state and len(Users.objects.filter(room_code=roomid)) < 20
     return Response({"date":room.exchange_date, "maxPrice":room.budget,
-                        "welcomeMsg":room.msg, "name":room.name})
+                        "welcomeMsg":room.msg, "name":room.name, "active": active})
 
 @api_view(['GET'])
 def get_room_info(request, room, user):

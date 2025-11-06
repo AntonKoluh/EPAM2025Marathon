@@ -22,7 +22,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import InputCopy from "@/components/inputCopy";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { RoomContext } from "./roomMain";
 import Modal from "@/components/Modal";
 
@@ -144,7 +144,10 @@ function InfoHover({ user }: { user: usersInfoType }) {
 
 function DeleteConfirmation({ user, code, setRoomInfo }: { user: usersInfoType; code: string, setRoomInfo : React.Dispatch<React.SetStateAction<fetchType | null>>; }) {
 
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   async function deleteUser(){
+    setIsSubmitting(true)
     const result = await fetch(`http://127.0.0.1:8000/api/v1/user/${user.id}?userCode=${code}`, {
     method: "DELETE",
     });
@@ -169,6 +172,7 @@ function DeleteConfirmation({ user, code, setRoomInfo }: { user: usersInfoType; 
         toast (`Unknown error (${result.status})`)
         break;
     }
+    setIsSubmitting(false)
   }
 
 
@@ -191,6 +195,7 @@ function DeleteConfirmation({ user, code, setRoomInfo }: { user: usersInfoType; 
             <span className="flex flex-row justify-center gap-6 mt-6">
               <button className="bg-(--red) py-1 w-40 text-xl rounded-xl font-semibold shadow-md/30 text-black hover:shadow-md hover:bg-red-400 transition-all duration-150 cursor-pointer"
               onClick={deleteUser}
+              disabled={isSubmitting}
               >
                 Remove
               </button>
