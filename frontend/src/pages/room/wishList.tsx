@@ -23,7 +23,7 @@ export default function WishList() {
       </div>
       <div className="h-full min-h-10 flex flex-col justify-start items-top w-full my-2">
         {wishType == "pref" ? (
-          <div className="line-clamp-6">{currentUser?.pref}</div>
+          <div className="line-clamp-6 px-2">{currentUser?.pref}</div>
         ) : (
           <div className="w-full p-2 flex flex-col justify-start items-center gap-2 h-full overflow-y-auto my-scrollbar">
             {currentUser?.links.map((wish: wishType) => (

@@ -89,7 +89,7 @@ function UserCard({
     user.ln.slice(1);
 
   function handleLinkCopy(code: string) {
-    const link = window.location.href.slice(0, -6);
+    const link = window.location.href.slice(0, -7);
     navigator.clipboard.writeText(link + code);
     toast("Link has been copied successfully");
   }
@@ -151,6 +151,7 @@ function DeleteConfirmation({ user, code, setRoomInfo }: { user: usersInfoType; 
     const result = await fetch(`${import.meta.env.VITE_API_URL}v1/user/${user.id}?userCode=${code}`, {
     method: "DELETE",
     });
+    setIsSubmitting(false)
     switch (result.status){
       case 204:
         setRoomInfo((prev) => ({
@@ -172,7 +173,6 @@ function DeleteConfirmation({ user, code, setRoomInfo }: { user: usersInfoType; 
         toast (`Unknown error (${result.status})`)
         break;
     }
-    setIsSubmitting(false)
   }
 
 
