@@ -19,6 +19,7 @@ export function StartGame() {
     setIsLoading(true);
     if ((roomInfo?.users.length || 0) < 3) {
       toast("Cannot start game with less than 3 players");
+      setIsLoading(false);
       return;
     }
 
@@ -26,7 +27,6 @@ export function StartGame() {
       `${import.meta.env.VITE_API_URL}v1/room/start/${room}/${user}/`
     );
     const data = await result.json();
-    console.log(data.users);
     setRoomInfo((prev) => ({
       room: { ...prev!.room, state: true },
       users: data.users,
