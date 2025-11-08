@@ -1,5 +1,4 @@
-# .github/workflows/frontend-e2e.yml
-name: Frontend E2E BDD deleteUser
+name: DeleteUser (Deployed)
 
 on:
   push:
@@ -43,14 +42,10 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      # --- Option A: run against local preview (Vite) ---
-      - name: Build app
-        run: npm run build
-
-      - name: Run BDD (start preview, wait, test)
+      - name: Run BDD against deployed URL
         env:
-          BASE_URL: http://localhost:5173
-        run: npm run ci
+          BASE_URL: ${{ secrets.E2E_BASE_URL }}
+        run: npm run test:bdd
 
       - name: Generate HTML report
         if: always()
@@ -61,7 +56,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: frontend-e2e-reports
-          # paths are repo-root relative (not affected by defaults.run)
           path: |
             frontend/reports/
             frontend/reports/cucumber.json
