@@ -2,7 +2,7 @@ name: E2E BDD
 
 on:
   push:
-    branches: [ main ]
+    branches: [ staging, main ]
   pull_request:
 
 jobs:
