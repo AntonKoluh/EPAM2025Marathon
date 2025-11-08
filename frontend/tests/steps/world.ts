@@ -8,7 +8,7 @@ export class CustomWorld {
   baseUrl: string;
 
   constructor({ parameters }: { parameters?: Record<string, unknown> }) {
-    this.baseUrl = (parameters?.baseUrl as string) || 'http://localhost:5173';
+    this.baseUrl = (parameters?.baseUrl as string) || 'https://anton-marathon-2025.pp.ua';
   }
 }
 

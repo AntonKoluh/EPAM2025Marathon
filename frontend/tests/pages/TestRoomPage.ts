@@ -10,7 +10,7 @@ export class LoginPage extends BasePage {
   }
 
   async open(baseUrl: string) {
-    await this.page.goto(`${baseUrl}/BuAPIg/FnWo-m`);
+    await this.page.goto(`${baseUrl}/en1SAp/dhkaHC`);
   }
 
   async delete() {
