@@ -20,7 +20,7 @@ When('i confirm the deletion', async function (this: CustomWorld) {
   await modal.confirm();
 });
 
-// Runs locally, however, due to CORS and django API fails on GithubActions
+// Runs locally, however, due to CORS and django API fails on GithubActions...
 // Then('i should see a success message', async function (this: CustomWorld) {
 //   await this.page.getByText(/test-delete sss removed successfully/i).waitFor({
 //     state: 'visible'

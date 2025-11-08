@@ -116,7 +116,7 @@ function UserCard({
             {user.id != currentAdmin && !roomState && <DeleteConfirmation user={user} code={currentCode} setRoomInfo={setRoomInfo}/>}
             <img
               src={linksvg}
-              alt="link copy button"
+              alt="link copy icon"
               className="cursor-pointer hover:bg-gray-200"
               onClick={() => handleLinkCopy(user.code)}
             />
