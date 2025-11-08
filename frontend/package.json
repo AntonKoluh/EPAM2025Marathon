@@ -8,10 +8,10 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-  "test:bdd": "node --loader ts-node/esm ./node_modules/.bin/cucumber-js -p default",
+  "test:bdd": "cross-env NODE_OPTIONS=\"--loader ts-node/esm\" cucumber-js -p default",
     "pw:install": "playwright install --with-deps",
     "ci:start": "vite preview --port 5173",
-  "ci:test": "node --loader ts-node/esm ./node_modules/.bin/cucumber-js -p default",
+  "ci:test": "cross-env NODE_OPTIONS=\"--loader ts-node/esm\" cucumber-js -p default",
     "ci": "start-server-and-test ci:start http://localhost:5173 ci:test"
   },
   "dependencies": {
