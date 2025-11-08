@@ -183,6 +183,7 @@ function DeleteConfirmation({ user, code, setRoomInfo }: { user: usersInfoType; 
           src={bin}
           alt="delete button"
           className="cursor-pointer hover:bg-gray-200"
+          data-testid={`bin-icon-${user.fn}`}
         />
       </DialogTrigger>
       <DialogContent>
