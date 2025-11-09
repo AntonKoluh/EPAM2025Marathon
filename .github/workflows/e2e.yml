@@ -45,8 +45,7 @@ jobs:
       - name: Run BDD against deployed URL
         env:
           BASE_URL: ${{ secrets.E2E_BASE_URL }}
-          NODE_OPTIONS: --loader ts-node/esm
-        run: npm run test:bdd
+        run: npx cucumber-js -p default
 
       - name: Generate HTML report
         if: always()
