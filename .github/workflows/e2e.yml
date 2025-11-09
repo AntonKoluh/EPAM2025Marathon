@@ -45,7 +45,7 @@ jobs:
       - name: Run BDD against deployed URL
         env:
           BASE_URL: ${{ secrets.E2E_BASE_URL }}
-        run: npx start-server-and-test "npm run ci:start" https://anton-marathon-2025.pp.ua "npx cucumber-js -p default"
+        run: npx cucumber-js -p default
 
       - name: Generate HTML report
         if: always()
