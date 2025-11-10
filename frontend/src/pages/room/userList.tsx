@@ -34,7 +34,7 @@ export default function UserList() {
   const playersCount = roomInfo?.users.length || 0;
 
   return (
-    <div className="bg-white rounded-xl flex-2 w-full h-fit p-4 shadow-md/40 flex flex-col justify-center items-center max-h-130">
+    <div className="bg-white rounded-xl flex-2 w-full h-fit p-4 shadow-md flex flex-col justify-center items-center max-h-120">
       <div className="flex flex-row justify-start items-center">
         <div>
           <h1 className="text-2xl font-semibold text-left">Who's Playing?</h1>

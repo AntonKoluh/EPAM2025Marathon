@@ -47,6 +47,7 @@ class Users(models.Model):
     giftee = models.CharField(blank=True, null=True)
     pref = models.CharField(max_length=250, null=True, blank=True)
     links = models.JSONField(default=list, validators=[validate_items], blank=True)
+    ai_links = models.JSONField(default=list, validators=[validate_items], blank=True)
     code = models.CharField(max_length=7)
     room_code = models.CharField(max_length=10, blank=True)
     active = models.BooleanField(default=True)

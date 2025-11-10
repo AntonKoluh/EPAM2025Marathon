@@ -44,7 +44,7 @@ export default function CreateRoom() {
       return;
     }
     if (new Date(value) < new Date()) {
-      console.log("Nope!")
+      console.log("Nope!");
     }
     navigate(
       `/createuser?roomName=${data.roomName}&maxPrice=${data.maxPrice}&welcomeMsg=${data.welcomeMsg}&date=${value}`
@@ -52,79 +52,87 @@ export default function CreateRoom() {
   }
 
   return (
-    <div className="flex flex-col justify-start items-center gap-5 h-full w-full">
-      <CreationFeedBack variant={1} />
-      <form
-        className="flex flex-col justify-start items-center gap-2 h-full mt-4 w-full max-w-2xl"
-        onSubmit={submitRoom}
-      >
-        <div className="flex flex-col justify-start items-center w-full max-w-xl">
-          <p className="text-left text-(--text) w-full max-w-xl">
-            Room Name<span className="text-(--red)">*</span>:
-          </p>
-          <input
-            type="text"
-            name="roomName"
-            className={clsx(
-              "rounded-sm p-1 text-black bg-(--gray) border-border border w-full max-w-xl",
-              roomError["roomName"] ? "border-red-600" : "border-(--green)"
-            )}
-            placeholder="Room Name"
-          />
-          {roomError["roomName"] && (
-            <p className="text-red-500 text-sm">*{roomError["roomName"]}</p>
-          )}
-        </div>
-        <div className="flex flex-col justify-start items-center w-full">
-          <p className="text-left text-(--text) w-full max-w-xl">
-            Welcoming message:
-          </p>
-          <textarea
-            name="welcomeMsg"
-            className="bg-(--gray) border-border rounded-l-sm p-1 text-black! resize-none w-full h-40 border-2 max-w-xl"
-            placeholder="Leave a nice welcoming message to put people in a gift giving mood!"
-          />
-        </div>
-        <div className="flex flex-row justify-between items-center w-full max-w-xl gap-4">
-        <div className="flex flex-col flex-1">
-          <p className="text-left text-(--text)">
-            Max Price<span className="text-(--red)">*</span>
-          </p>
-          <div className="flex flex-row justify-center items-center">
+    <>
+      <title>Create Room</title>
+
+      <div className="flex flex-col justify-start items-center gap-5 h-full w-full">
+        <CreationFeedBack variant={1} />
+        <form
+          className="flex flex-col justify-start items-center gap-2 h-full mt-4 w-full max-w-2xl"
+          onSubmit={submitRoom}
+        >
+          <div className="flex flex-col justify-start items-center w-full max-w-xl">
+            <p className="text-left text-(--text) w-full max-w-xl">
+              Room Name<span className="text-(--red)">*</span>:
+            </p>
             <input
               type="text"
-              name="maxPrice"
+              name="roomName"
               className={clsx(
-                "bg-(--gray) border-border rounded-l-sm p-1 text-black! w-full border-2 border-r-0",
-                roomError["maxPrice"] ? "border-red-600" : "border-(--green)"
+                "rounded-sm p-1 text-black bg-(--gray) border-border border w-full max-w-xl",
+                roomError["roomName"] ? "border-red-600" : "border-(--green)"
               )}
-              placeholder="Max Price"
+              placeholder="Room Name"
             />
-            <p
-              className={clsx(
-                "p-1 px-0.5 bg-(--gray) border-border rounded-r-sm h-full text-md my-auto border-(green) border-2 border-l border-l--border",
-                roomError["maxPrice"] ? "border-red-600" : "border-(--green)"
-              )}
-            >
-              UAH
-            </p>
+            {roomError["roomName"] && (
+              <p className="text-red-500 text-sm">*{roomError["roomName"]}</p>
+            )}
           </div>
-          {roomError["maxPrice"] && (
-            <p className="text-red-500 text-sm text-center">
-              *{roomError["maxPrice"]}
+          <div className="flex flex-col justify-start items-center w-full">
+            <p className="text-left text-(--text) w-full max-w-xl">
+              Welcoming message:
             </p>
-          )}
-        </div>
-        <Calendar28 value={value} setValue={setValue}/>
-        </div>
-        <button
-          type="submit"
-          className="text-xl font-semibold border-(green) border-2 rounded-md px-8 py-1 mt-5
+            <textarea
+              name="welcomeMsg"
+              className="bg-(--gray) border-border rounded-l-sm p-1 text-black! resize-none w-full h-40 border-2 max-w-xl"
+              placeholder="Leave a nice welcoming message to put people in a gift giving mood!"
+            />
+          </div>
+          <div className="flex flex-row justify-between items-center w-full max-w-xl gap-4">
+            <div className="flex flex-col flex-1">
+              <p className="text-left text-(--text)">
+                Max Price<span className="text-(--red)">*</span>
+              </p>
+              <div className="flex flex-row justify-center items-center">
+                <input
+                  type="text"
+                  name="maxPrice"
+                  className={clsx(
+                    "bg-(--gray) border-border rounded-l-sm p-1 text-black! w-full border-2 border-r-0",
+                    roomError["maxPrice"]
+                      ? "border-red-600"
+                      : "border-(--green)"
+                  )}
+                  placeholder="Max Price"
+                />
+                <p
+                  className={clsx(
+                    "p-1 px-0.5 bg-(--gray) border-border rounded-r-sm h-full text-md my-auto border-(green) border-2 border-l border-l--border",
+                    roomError["maxPrice"]
+                      ? "border-red-600"
+                      : "border-(--green)"
+                  )}
+                >
+                  UAH
+                </p>
+              </div>
+              {roomError["maxPrice"] && (
+                <p className="text-red-500 text-sm text-center">
+                  *{roomError["maxPrice"]}
+                </p>
+              )}
+            </div>
+            <Calendar28 value={value} setValue={setValue} />
+          </div>
+          <button
+            type="submit"
+            className="text-xl font-semibold border-(green) border-2 rounded-md px-8 py-1 mt-5
               cursor-pointer hover:bg-(--green) hover:text-white transition-all duration-150 shadow-md/30 hover:shadow-md"
-        >
-          Next{" "}
-        </button>
-      </form>
-    </div>
+          >
+            Next{" "}
+          </button>
+        </form>
+      </div>
+    </>
   );
 }

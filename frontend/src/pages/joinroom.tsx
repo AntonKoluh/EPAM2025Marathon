@@ -2,7 +2,11 @@ import { Link, useParams } from "react-router";
 import Button from "../components/buttons";
 import Input from "../components/formInput";
 import { useEffect, useState } from "react";
-import christmastree from "../assets/christmastree.svg";
+import christmastree from "@/assets/christmastree.svg";
+import balldecor from "@/assets/presents.svg";
+import giftbox from "@/assets/Gifts.svg";
+import elf from "@/assets/cookie.svg";
+import wreath from "@/assets/wreath.svg";
 
 type roomInfoType = {
   date: string;
@@ -35,11 +39,20 @@ export default function JoinRoomByCode() {
 
   if (!id) {
     return (
-      <div className="flex flex-col w-full h-full justify-start mt-10 items-center gap-2">
+      <>
+      <title>Join Room</title>
+      <div className="relative flex flex-col w-full h-full justify-start mt-20 items-center gap-10">
+        <img src={balldecor} alt="ball decor" className="absolute top-0 left-25 w-24 h-24"/>
+        <img src={giftbox} alt="gift box" className="absolute bottom-60 left-50 w-24 h-24"/>
+        <img src={elf} alt="elf" className="absolute bottom-50 right-10 w-24 h-24"/>
+        <img src={wreath} alt="wreath" className="absolute top-10 right-20 w-24 h-24"/>
         <h1 className="text-xl font-(family-name:--roboto-font) font-medium">
           Join Room by code:
         </h1>
+        <span className="max-w-1/3 w-full">
         <Input placeholder={"Code"} value={joinCode} state={setJoinCode} />
+        </span>
+        <span className="max-w-1/3 w-full">
         {joinCode ? (
           <Link to={`/${joinCode}`} className="w-full text-center">
             <Button text="Join" variant="main" />
@@ -47,7 +60,9 @@ export default function JoinRoomByCode() {
         ) : (
           <Button text="Enter Code" variant="inactive" />
         )}
+        </span>
       </div>
+      </>
     );
   }
 

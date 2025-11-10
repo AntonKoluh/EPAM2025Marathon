@@ -1,6 +1,8 @@
+import json
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+from api.ai_integration import ai_suggestion
 from base.models import Users, Room
 from .serializers import UsersSerializer, RoomSerializer
 from .helpers import user_randomizer
@@ -35,6 +37,7 @@ def get_room_info(request, room, user):
                 item.email = ""
                 item.phone = 0
                 item.links = [{}]
+                item.ai_links = [{}]
                 item.pref = ""
                 item.code = ""
             item.giftee = "" if item.code != user else item.giftee
@@ -83,3 +86,15 @@ def start_game(request, room, user):
     room_obj.save()
 
     return Response({"users": users_sorted}, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def ai_prefs(request, room, user):
+    user_obj = Users.objects.filter(code=user, room_code=room).first()
+    room_obj = Room.objects.filter(room_code=room).first()
+    if not user_obj or not room_obj:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    if not user_obj.ai_links:
+        user_obj.ai_links = json.loads(ai_suggestion(user_obj.pref, room_obj.budget))
+        user_obj.save()
+    users_serializer = UsersSerializer(user_obj)
+    return Response(users_serializer.data, status=status.HTTP_200_OK)

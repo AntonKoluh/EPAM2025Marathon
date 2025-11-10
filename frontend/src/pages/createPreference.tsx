@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/accordion";
 import { ArrowLeft, Circle, CircleCheckBig, Plus } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 type wishType = {
   id: number;
@@ -53,6 +54,11 @@ export default function CreatePreferance({
   }
 
   async function handleFinish(){
+    const wishCheck = wish.filter((item) => item.value.trim().length > 0)
+    if (wishCheck.length === 0 && pref.trim().length === 0){
+      toast.error("Please add at least one wish or preference")
+      return
+    }
     setIsSubmiting(true)
     submitResult()
     setIsSubmiting(false)

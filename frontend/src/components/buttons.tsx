@@ -37,7 +37,7 @@ function SecondaryButton({ text }: { text: string }) {
 function InactiveButton({ text }: { text: string }) {
   return (
     <button
-      className="w-full max-w-100 sm:text-xl text-md rounded-md font-(family-name:--roboto-font) border-[#2C5134] border bg-gray-300
+      className="w-full sm:text-xl text-md rounded-4xl font-(family-name:--roboto-font) border-[#2C5134] border bg-gray-300
        transition-color duration-150 font-semibold py-2 px-5 cursor-default shadow-sm text-shadow-2xs"
     >
       {text}

@@ -17,6 +17,7 @@ export type usersInfoType = {
   admin: boolean;
   adress: string;
   links: [];
+  ai_links: [];
   pref: string;
   code: string;
 };
@@ -28,6 +29,7 @@ export type fetchType = {
 
 export type wishType = {
   id: number;
-  value: string;
+  value?: string;
+  name?: string;
   link: string;
 }

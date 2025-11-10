@@ -84,6 +84,7 @@ export default function MasterCreateUser() {
   case "user":
   return (
         <>
+        <title>Create User</title>
           <CreationFeedBack variant={room.roomName != "" ? 2 : 5} />
           <CreateUser
             data={userData}
@@ -95,6 +96,7 @@ export default function MasterCreateUser() {
   case "pref":
     return(
         <>
+        <title>Create Preferences</title>
           <CreationFeedBack variant={room.roomName != "" ? 3 : 6} />
           <CreatePreferance maxPrice={room.maxPrice} setState={setState} wish={wish} setWish={setWish} pref={pref} setPref={setPref} submitResult={create}
           openPref={openPref} setOpenPref={setOpenPref}/>

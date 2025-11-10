@@ -55,8 +55,9 @@ export default function RoomMain() {
 
   return (
     <RoomContext.Provider value={{roomInfo, setRoomInfo, user, currentAdmin, currentUser}}>
-    <div className="flex flex-col jsutify-start items-top w-full p-6 h-fit">
-      <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full h-fit">
+      <title>Your Secret Nick Room</title>
+    <div className="flex flex-col jsutify-start items-top w-full p-6 h-full">
+      <div className="flex flex-col sm:flex-row justify-start items-top gap-4 w-full h-fit">
         <RoomInfo roomInfo={roomInfo} />
         <PersonalCard roomInfo={roomInfo} user={user} />
       </div>
@@ -67,7 +68,7 @@ export default function RoomMain() {
         <WishList />
         </div>
       </div>
-    </div>
+      </div>
     </RoomContext.Provider>
   );
 }

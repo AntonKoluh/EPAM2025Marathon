@@ -8,6 +8,8 @@ import raindeers from "@/assets/Raindeers.svg"
 
 export default function Landing(){
     return (
+        <>
+        <title>Secret Nick</title>
         <div className="relative flex flex-col justify-start items-center gap-26 h-full">
             <div className="z-10">
     <h1 className="font-(family-name:--roboto-font) font-bold text-black text-xl sm:text-4xl text-center mt-25">Make This Holiday Magical <br/> with Seecret Nick</h1>
@@ -25,5 +27,6 @@ export default function Landing(){
         <img src = {snowglobe} alt="snowglobe" className="absolute right-3/4 top-65 z-0"/>
         <img src = {fireworks} alt="fireworks" className="absolute left-3/4 top-65 z-0"/>
     </div>
+    </>
 )
 }

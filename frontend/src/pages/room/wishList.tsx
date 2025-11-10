@@ -25,7 +25,7 @@ export default function WishList() {
         {wishType == "pref" ? (
           <div className="line-clamp-6 px-2">{currentUser?.pref}</div>
         ) : (
-          <div className="w-full p-2 flex flex-col justify-start items-center gap-2 h-full overflow-y-auto my-scrollbar">
+          <div className="w-full p-2 flex flex-col justify-start items-center gap-2 h-fit overflow-y-auto my-scrollbar">
             {currentUser?.links.map((wish: wishType) => (
               <WishCard wish={wish} key={wish.id} />
             ))}
@@ -46,12 +46,14 @@ export default function WishList() {
 export function WishCard({ wish }: { wish: wishType }) {
   return (
     <span className="shadow-md/20 bg-(--gray) rounded-xl py-2 px-4 flex flex-row justify-between items-center w-full">
-      <span className="text-md font-medium w-full items-center">{wish.value}</span>
+      <span className="text-md font-medium w-full items-center">{wish.value ? wish.value : wish.name}</span>
       <span className="flex flex-row gap-2 w-full justify-end text-right items-center">
         <span className="w-0.5 h-3 bg-black" />
+        {wish.link &&(
         <a href={wish.link} className="text-purple-700 underline!">
           Link
         </a>
+        )}
       </span>
     </span>
   );
