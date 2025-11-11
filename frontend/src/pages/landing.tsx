@@ -18,6 +18,7 @@ export default function Landing(){
     <div className="flex flex-col gap-4 justify-start items-center h-full w-full">
     <Link to={"/create"} className="w-full text-center"><Button text={"Create New Room"} variant="main"/></Link>
     <Link to={"/join"} className="w-full text-center"><Button text={"Join Existing Room"} variant="secondary" /></Link>
+    <Link to={"/recover"} className="text-blue-700 underline">Recover admin link</Link>
     </div>
         <img src = {fireworks} alt="fireworks" className="absolute left-3"/>
         <img src = {presents} alt="presents" className="absolute right-2"/>

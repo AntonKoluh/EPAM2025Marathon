@@ -49,6 +49,7 @@ class Users(models.Model):
     links = models.JSONField(default=list, validators=[validate_items], blank=True)
     ai_links = models.JSONField(default=list, validators=[validate_items], blank=True)
     code = models.CharField(max_length=7)
+    recovery_pass = models.CharField(max_length=7, default=None, null=True)
     room_code = models.CharField(max_length=10, blank=True)
     active = models.BooleanField(default=True)
 
@@ -69,6 +70,9 @@ class Users(models.Model):
                         adress=user.get('adress'), pref=pref, links=wish, code=generate_user_code, room_code=room_key)
         if data.get("room").get('roomName') != '':
             room_key = Room.create_room(data.get("room"), generate_user_code)
+            recovery_key = data.get("room").get("roomPass")
+            if recovery_key:
+                new_user.recovery_pass = recovery_key
             new_user.admin = True
             new_user.room_code = room_key
 

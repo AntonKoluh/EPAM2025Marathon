@@ -39,8 +39,8 @@ export default function CreateFinal({
     return (
       <div className="flex flex-col gap-4 justify-center items-center px-10 py-4 w-full">
         <div className="flex flex-col justify-center gap-2 overflow-hidden w-full">
-          <h2 className="text-3xl">Your Secret Nick Room is Ready!</h2>
-          <p>
+          <h2 className="text-3xl text-center">Your Secret Nick Room is Ready!</h2>
+          <p className="text-center">
             Share the link below with up to 20 friends to invite them -- and
             <br />
             don't lose your personal link! Let the festive magic begin
@@ -48,6 +48,7 @@ export default function CreateFinal({
         </div>
         <div className="flex flex-col gap-5 justify-center items-center w-full">
           <h3 className="font-semibold w-full max-w-xl">Your Room Link</h3>
+          <div className="flex flex-row justify-center items-center gap-5 w-full max-w-xl">
           <div className="flex flex-row justify-center items-center w-full max-w-xl">
             <input
               type="text"
@@ -67,6 +68,16 @@ export default function CreateFinal({
                 onClick={handlePersonalCopy}
               />
             )}
+          </div>
+          <div className="flex flex-row justify-center items-center ">
+                        <input
+              type="text"
+              className="rounded-sm p-1 text-black bg-(--gray) border-border border-3 w-full"
+              value={rooms.room}
+              name="personalLink"
+              disabled={true}
+            />
+            </div>
           </div>
         </div>
         <div className="flex flex-col w-full justify-center items-center gap-5">

@@ -8,6 +8,7 @@ import JoinRoomByCode from "./pages/joinroom.tsx";
 import CreateRoom from "./pages/createroom.tsx";
 import MasterCreateUser from "./pages/masterCreateUser.tsx";
 import RoomMain from "./pages/room/roomMain.tsx";
+import RecoverAdmin from "./pages/recoverAdmin.tsx";
 
 
 createRoot(document.getElementById("root")!).render(
@@ -17,6 +18,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/" element={<App />} >
         <Route path="/" element={<Landing />} />
         <Route path="/join" element={<JoinRoomByCode />} />
+        <Route path="/recover" element={<RecoverAdmin />} />
         <Route path="/create" element={<CreateRoom />} />
         <Route path="/createuser" element={<MasterCreateUser />} />
         <Route path="/:id" element={<JoinRoomByCode />} />

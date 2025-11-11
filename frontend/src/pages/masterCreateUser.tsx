@@ -9,6 +9,7 @@ type roomType = {
   roomName: string | null;
   maxPrice: string | null;
   welcomeMsg: string | null;
+  roomPass: string | null;
   date: string | null;
   empty: null;
 };
@@ -21,6 +22,7 @@ export default function MasterCreateUser() {
     roomName: "",
     maxPrice: "",
     welcomeMsg: "",
+    roomPass: "",
     date: "",
     empty: null,
   });
@@ -51,6 +53,7 @@ export default function MasterCreateUser() {
         maxPrice: params.get("maxPrice"),
         welcomeMsg: params.get("welcomeMsg"),
         date: params.get("date"),
+        roomPass: params.get("roomPass"),
         empty: null,
       });
     }

@@ -47,7 +47,7 @@ export default function CreateRoom() {
       console.log("Nope!");
     }
     navigate(
-      `/createuser?roomName=${data.roomName}&maxPrice=${data.maxPrice}&welcomeMsg=${data.welcomeMsg}&date=${value}`
+      `/createuser?roomName=${data.roomName}&maxPrice=${data.maxPrice}&welcomeMsg=${data.welcomeMsg}&date=${value}&roomPass=${data.roomPass}`
     );
   }
 
@@ -77,6 +77,20 @@ export default function CreateRoom() {
             {roomError["roomName"] && (
               <p className="text-red-500 text-sm">*{roomError["roomName"]}</p>
             )}
+          </div>
+                    <div className="flex flex-col justify-start items-center w-full max-w-xl">
+            <p className="text-left text-(--text) w-full max-w-xl">
+              Room Recovery Password:
+            </p>
+            <input
+              type="text"
+              name="roomPass"
+              className={clsx(
+                "rounded-sm p-1 text-black bg-(--gray) border-border border w-full max-w-xl",
+                roomError["roomName"] ? "border-red-600" : "border-(--green)"
+              )}
+              placeholder="Room Reecovery Password"
+            />
           </div>
           <div className="flex flex-col justify-start items-center w-full">
             <p className="text-left text-(--text) w-full max-w-xl">

@@ -46,6 +46,15 @@ def get_room_info(request, room, user):
     users_sorted = sorted(users_serializer.data, key=lambda x: x['admin'], reverse=True)
     return Response({"room": room_serializer.data, "users":users_sorted}, status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+def recover_admin(request, fn, passwd):
+    if not passwd:
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
+    found_user = Users.objects.filter(fn=fn, recovery_pass=passwd).first()
+    if not found_user:
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
+    return Response({"room":found_user.room_code, "code": found_user.code}, status=status.HTTP_200_OK)
+
 @api_view(['DELETE'])
 def delete_user(request, id):
     user_code = request.query_params.get("userCode")
