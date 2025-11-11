@@ -112,12 +112,12 @@ function ViewPref({
   pref: string | undefined;
 }) {
   const trigger = (
-    <span
-          className="text-md py-1 border-3 border-black w-full rounded-4xl shadow-md/50 hover:shadow-md
-                transition-all duration-150 hover:bg-gray-200 cursor-pointer"
-        >
-          View Prefference
-    </span>
+  <p
+    className="text-md py-1 border-3 border-black w-full rounded-4xl shadow-md/50 hover:shadow-md
+    transition-all duration-150 hover:bg-gray-200 cursor-pointer"
+  >
+    View Preferences
+  </p>
   )
   const title = (
             <span className="flex flex-row justify-start items-top gap-5 h-full">
