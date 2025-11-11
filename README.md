@@ -15,6 +15,6 @@ My take on EPAM Marathon 2025 idea, all code was written by me.
 ---
 
 ## 🛠️ TechStack:
-frontend - React, shadcn, tailwind css
-Backend - Django restful API
-AWS - backend on AWS E2C using nginx, frontend on AWS Amplify
+frontend - React, shadcn, tailwind css \n
+Backend - Django restful API \n
+AWS - backend on AWS E2C using nginx, frontend on AWS Amplify \n
