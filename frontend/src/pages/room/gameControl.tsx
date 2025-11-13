@@ -221,7 +221,7 @@ function SurpriseGift({ giftee }: { giftee: usersInfoType | undefined }) {
           <span className="w-full h-px bg-gray-400" />
           <span className="text-[14px] text-gray-800">{giftee!.pref}</span>
         </span>
-        {giftee?.ai_links ? (
+        {giftee?.ai_links && giftee?.ai_links.length > 0? (
           <span className="mt-2">
             <span className="text-(--red) font-semibold font-md">Nick's little AI helper found these:</span>
           <span className="h-full w-full gap-2 py-2 flex flex-col justify-start items-center max-h-60 overflow-auto my-scrollbar">
